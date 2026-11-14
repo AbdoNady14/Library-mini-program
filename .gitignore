@@ -1,1 +1,30 @@
+# Compiled Java files & packages
 *.class
+*.jar
+*.war
+*.ear
+
+# Build & output directories
+bin/
+build/
+out/
+target/
+
+# Java crash logs
+hs_err_pid*
+replay_pid*
+
+# VS Code & IDE settings
+.vscode/
+.idea/
+*.iml
+
+# Operating System files
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Sensitive data & local databases (if added later)
+.env
+*.sqlite
+*.db
