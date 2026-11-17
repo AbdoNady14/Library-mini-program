@@ -1,3 +1,7 @@
+package models;
+
+import Repositories.BookRepository;
+
 public class Book {
     private int bookId;
     private String title;
@@ -6,7 +10,7 @@ public class Book {
     private boolean isAvailable;
 
     public Book(String title, String author, String category) {
-        this.bookId = Books.getNumberOfBooks() + 1;
+        this.bookId = BookRepository.getNumberOfBooks() + 1;
         this.title = title;
         this.author = author;
         this.category = category;
@@ -51,6 +55,12 @@ public class Book {
     
     public void setAvailable(boolean available) {
         isAvailable = available;
+    }
+
+    @Override
+    public String toString() {
+        return "Book Id: " + bookId + ", Title: " + title + ", Author: " + author 
+            + ", Category: " + category + ", Available: " + isAvailable;
     }
 
 }
