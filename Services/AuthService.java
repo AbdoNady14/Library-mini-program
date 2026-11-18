@@ -5,21 +5,11 @@ import Repositories.TeacherRepository;
 import models.Student;
 import models.Teacher;
 import models.User;
+import utils.PasswordHasher;
 
 public class AuthService {
-
-// 1. Sign in: returns the User object if credentials are valid, or null otherwise
-    public static User signin(String email, String password) {
-        if (email == null || password == null) return null;
-
-        User user = getUserByEmail(email.trim());
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
-        }
-        return null;
-    }
-
-// 2. Sign up: validates input, creates the account, and returns a status message
+    
+// 1. Sign up: validates input, creates the account, and returns a status message
     public static String signup(int accountType, String name, String email, String password) {
         if (accountType != 1 && accountType != 2) {
             return "Invalid account type.";
@@ -39,14 +29,28 @@ public class AuthService {
 
         String cleanName = name.trim();
         String cleanEmail = email.trim();
+        String hashedPassword = PasswordHasher.hashPassword(password);
 
         switch (accountType) {
-            case 1 -> Student.addStudent(cleanName, cleanEmail, password);
-            case 2 -> Teacher.addTeacher(cleanName, cleanEmail, password);
+            case 1 -> Student.addStudent(cleanName, cleanEmail, hashedPassword);
+            case 2 -> Teacher.addTeacher(cleanName, cleanEmail, hashedPassword);
         }
 
         return "Account created successfully!";
     }
+
+    
+// 2. Sign in: returns the User object if credentials are valid, or null otherwise
+    public static User signin(String email, String password) {
+        if (email == null || password == null) return null;
+
+        User user = getUserByEmail(email.trim());
+        if (user != null && PasswordHasher.verifyPassword(password, user.getPassword())) {
+            return user;
+        }
+        return null;
+    }
+
 
 // 3. Helper methods for user lookup and email validation
     public static User getUserByEmail(String email) {
