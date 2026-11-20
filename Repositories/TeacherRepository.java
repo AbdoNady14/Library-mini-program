@@ -1,26 +1,33 @@
 package Repositories;
-import java.util.ArrayList; 
-import java.util.List;
 
 import models.Teacher;
+import models.User;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeacherRepository {
-    private static final List<Teacher> teachers = new ArrayList<>();
-
     public static void addTeacher(Teacher teacher) {
-        teachers.add(teacher);
+        UserRepository.addUser(teacher);
     }
 
     public static List<Teacher> getTeachers() {
+        List<Teacher> teachers = new ArrayList<>();
+        for (User u : UserRepository.getUsersByRole("TEACHER")) {
+            teachers.add((Teacher) u);
+        }
         return teachers;
     }
 
     public static Teacher getTeacherByEmail(String email) {
-        for (Teacher teacher : teachers) {
-            if (teacher.getEmail().equals(email)) {
-                return teacher;
-            }
-        }
-        return null; // Return null if no teacher with the given email is found
+        User u = UserRepository.getUserByEmail(email);
+        return (u instanceof Teacher) ? (Teacher) u : null;
+    }
+
+    public static void updateTeacher(Teacher teacher) {
+        UserRepository.updateUser(teacher);
+    }
+
+    public static void deleteTeacher(int id) {
+        UserRepository.deleteUser(id);
     }
 }

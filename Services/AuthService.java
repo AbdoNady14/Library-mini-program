@@ -1,14 +1,13 @@
 package Services;
 
-import Repositories.StudentRepository;
-import Repositories.TeacherRepository;
+import Repositories.UserRepository;
 import models.Student;
 import models.Teacher;
 import models.User;
 import utils.PasswordHasher;
 
 public class AuthService {
-    
+
 // 1. Sign up: validates input, creates the account, and returns a status message
     public static String signup(int accountType, String name, String email, String password) {
         if (accountType != 1 && accountType != 2) {
@@ -39,8 +38,7 @@ public class AuthService {
         return "Account created successfully!";
     }
 
-    
-// 2. Sign in: returns the User object if credentials are valid, or null otherwise
+// 2. Sign in: returns the User object with loaded borrowed books if valid
     public static User signin(String email, String password) {
         if (email == null || password == null) return null;
 
@@ -51,17 +49,10 @@ public class AuthService {
         return null;
     }
 
-
 // 3. Helper methods for user lookup and email validation
     public static User getUserByEmail(String email) {
         if (email == null) return null;
-        String cleanEmail = email.trim();
-
-        Student student = StudentRepository.getStudentByEmail(cleanEmail);
-        if (student != null) {
-            return student;
-        }
-        return TeacherRepository.getTeacherByEmail(cleanEmail);
+        return UserRepository.getUserByEmail(email.trim());
     }
 
     public static boolean isValidEmail(String email) {

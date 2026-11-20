@@ -2,28 +2,26 @@ package models;
 import java.util.Scanner;
 
 public abstract class User {
-    private static int idCounter = 1;
     private int id;
     private String name;
     private String email;
     private String password;
     protected Book[] borrowedBooks;
     
-// لإنشاء مستخدم جديد (Signup)
+// Used when creating a new user to be added to the database
     protected User(String name, String email, String password) {
-        this(idCounter++, name, email, password);
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
 
-// لتحميل مستخدم موجود مسبقاً من الداتا بيز أو الملف
+// to load an existing user from the database
     protected User(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        if (id >= idCounter) {
-            idCounter = id + 1; // يضمن إن العداد يكمل بعد أكبر ID موجود
-        }
     }
 
     public int getId() {

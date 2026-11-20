@@ -1,7 +1,5 @@
 package models;
 
-import Repositories.BookRepository;
-
 public class Book {
     private int bookId;
     private String title;
@@ -9,12 +7,21 @@ public class Book {
     private String category;
     private boolean isAvailable;
 
+// Used when creating a new book to be added to the database
     public Book(String title, String author, String category) {
-        this.bookId = BookRepository.getNumberOfBooks() + 1;
         this.title = title;
         this.author = author;
         this.category = category;
         this.isAvailable = true;
+    }
+
+// Used when loading an existing book from the database
+    public Book(int bookId, String title, String author, String category, boolean isAvailable) {
+        this.bookId = bookId;
+        this.title = title;
+        this.author = author;
+        this.category = category;
+        this.isAvailable = isAvailable;
     }
 
     public int getBookId() {
