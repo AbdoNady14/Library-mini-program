@@ -1,5 +1,6 @@
-import database.Database;
 import java.util.Scanner;
+
+import database.Database;
 import program.Program;
 
 public class Main {
